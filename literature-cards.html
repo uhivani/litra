@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Русская Литература — Карточки</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=Cormorant+SC:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0806;
+  --surface: #130f09;
+  --card-bg: #1a1510;
+  --card-back: #16120d;
+  --gold: #c8a050;
+  --gold-light: #e8c878;
+  --gold-dim: #8a6c30;
+  --crimson: #7a1a1a;
+  --crimson-light: #c04040;
+  --text: #e0d0b0;
+  --text-dim: #806840;
+  --text-muted: #504030;
+  --border: #2a2010;
+  --border-gold: rgba(200,160,80,0.25);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Atmospheric background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 30%, rgba(122,26,26,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 85% 70%, rgba(200,160,80,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(200,160,80,0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Noise texture overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.container { position: relative; z-index: 1; }
+
+/* ─── HEADER ─── */
+header {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  position: relative;
+}
+
+.header-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.2rem;
+  color: var(--gold-dim);
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+}
+
+.header-ornament::before,
+.header-ornament::after {
+  content: '';
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim));
+}
+.header-ornament::after {
+  background: linear-gradient(90deg, var(--gold-dim), transparent);
+}
+
+h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 40px rgba(200,160,80,0.3);
+  margin-bottom: 0.6rem;
+}
+
+.subtitle {
+  color: var(--text-dim);
+  font-size: 1rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+.header-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.header-rule::before, .header-rule::after {
+  content: '';
+  flex: 1;
+  max-width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-gold));
+}
+.header-rule-center {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ─── TABS ─── */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  padding: 0 2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.tab-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  padding: 0.7rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+.tab-btn:first-child { border-radius: 3px 0 0 3px; }
+.tab-btn:last-child { border-radius: 0 3px 3px 0; border-left: none; }
+
+.tab-btn:hover { color: var(--gold); border-color: var(--border-gold); }
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  border-color: var(--gold);
+  color: var(--bg);
+  font-weight: 600;
+  box-shadow: 0 0 20px rgba(200,160,80,0.2);
+}
+
+.due-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  background: var(--crimson);
+  color: #fff;
+  font-size: 0.65rem;
+  padding: 0 5px;
+  border-radius: 10px;
+  margin-left: 8px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: normal;
+}
+
+/* ─── VIEWS ─── */
+.view { display: none; padding: 2rem 1rem 4rem; max-width: 780px; margin: 0 auto; }
+.view.active { display: block; }
+
+/* ─── STATS ─── */
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+.stat { text-align: center; }
+.stat strong {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.2rem;
+  text-shadow: 0 0 20px rgba(200,160,80,0.3);
+}
+.stat span { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ─── FILTERS ─── */
+.filter-row {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.filter-tag {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+.filter-tag:hover { border-color: var(--border-gold); color: var(--gold-dim); }
+.filter-tag.active { border-color: var(--gold); color: var(--gold); background: rgba(200,160,80,0.08); }
+
+/* ─── PROGRESS ─── */
+.progress-bar {
+  height: 2px;
+  background: var(--border);
+  margin-bottom: 2rem;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: visible;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--crimson), var(--gold));
+  transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  position: relative;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  right: -3px; top: -3px;
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--gold);
+}
+
+/* ─── FLASHCARD ─── */
+.card-container {
+  perspective: 1400px;
+  margin: 0 auto 1.5rem;
+  max-width: 640px;
+  height: 300px;
+  cursor: pointer;
+}
+.card-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(.4,0,.2,1);
+}
+.card-inner.flipped { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 2.5rem 3.5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Ornamental corners */
+.card-face::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(200,160,80,0.12);
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+/* Corner decorations */
+.card-face .corner {
+  position: absolute;
+  width: 20px; height: 20px;
+  border-color: var(--gold-dim);
+  border-style: solid;
+  opacity: 0.4;
+}
+.card-face .corner-tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+.card-face .corner-tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
+.card-face .corner-bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
+.card-face .corner-br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+
+.card-back {
+  transform: rotateY(180deg);
+  background: var(--card-back);
+}
+
+.card-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--text);
+  overflow-y: auto;
+  max-height: 180px;
+  font-weight: 300;
+}
+.card-back .card-text {
+  color: var(--gold-light);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.card-hint {
+  position: absolute;
+  bottom: 1.2rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.card-num {
+  position: absolute;
+  top: 1.1rem; right: 1.3rem;
+  font-family: 'Cormorant SC', serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.card-cat {
+  position: absolute;
+  top: 1.1rem; left: 1.3rem;
+  font-size: 0.68rem;
+  color: var(--gold);
+  opacity: 0.8;
+  background: rgba(200,160,80,0.08);
+  padding: 2px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(200,160,80,0.15);
+  letter-spacing: 0.05em;
+}
+
+/* ─── BUTTONS ─── */
+.card-controls {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  padding: 0.6rem 1.8rem;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid;
+  transition: all 0.25s;
+  letter-spacing: 0.06em;
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  border-color: var(--gold);
+  color: var(--bg);
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(200,160,80,0.2);
+}
+.btn-gold:hover {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  box-shadow: 0 4px 20px rgba(200,160,80,0.35);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: none;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+.btn-outline:hover { border-color: var(--border-gold); color: var(--gold-dim); }
+
+.btn-green {
+  background: rgba(30,70,50,0.3);
+  border-color: #2d5a40;
+  color: #6dbf8a;
+}
+.btn-green:hover { background: rgba(30,70,50,0.5); box-shadow: 0 0 12px rgba(109,191,138,0.15); }
+
+.btn-red {
+  background: rgba(90,20,20,0.3);
+  border-color: var(--crimson);
+  color: #c05050;
+}
+.btn-red:hover { background: rgba(90,20,20,0.5); box-shadow: 0 0 12px rgba(192,80,80,0.15); }
+
+/* ─── QUIZ ─── */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+.q-counter {
+  font-family: 'Cormorant SC', serif;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
+.quiz-score {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  color: var(--gold);
+  text-shadow: 0 0 10px rgba(200,160,80,0.3);
+}
+
+.quiz-question {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2rem 1.8rem 1.8rem;
+  margin-bottom: 1.2rem;
+  font-size: clamp(0.95rem, 2.3vw, 1.15rem);
+  line-height: 1.7;
+  font-weight: 300;
+  position: relative;
+}
+
+.quiz-question::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(200,160,80,0.08);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.q-num-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  color: var(--bg);
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.8rem;
+}
+
+/* ─── OPTIONS ─── */
+.options { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.option-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  padding: 0.85rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  line-height: 1.5;
+  font-weight: 300;
+}
+.option-btn:hover:not(:disabled) {
+  border-color: var(--border-gold);
+  background: rgba(200,160,80,0.06);
+  color: var(--gold-light);
+}
+.option-btn.correct {
+  border-color: #4a9a68 !important;
+  background: rgba(30,80,50,0.25) !important;
+  color: #7ed4a0 !important;
+}
+.option-btn.wrong {
+  border-color: var(--crimson-light) !important;
+  background: rgba(120,30,30,0.25) !important;
+  color: #d48080 !important;
+}
+.option-btn:disabled { cursor: default; }
+
+.opt-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-family: 'Cinzel', serif;
+}
+
+/* ─── FEEDBACK ─── */
+.feedback-msg {
+  padding: 0.9rem 1.2rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  margin-top: 0.8rem;
+  display: none;
+  font-style: italic;
+  line-height: 1.6;
+  font-weight: 400;
+}
+.feedback-msg.show { display: block; }
+.feedback-msg.ok { background: rgba(30,80,50,0.2); border: 1px solid #2d5a40; color: #7ed4a0; }
+.feedback-msg.fail { background: rgba(120,30,30,0.2); border: 1px solid var(--crimson); color: #d48080; }
+
+.quiz-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.2rem;
+  gap: 0.8rem;
+}
+
+.auto-timer-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.auto-timer-bar.visible { opacity: 1; }
+.auto-timer-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--crimson));
+  border-radius: 2px;
+  width: 100%;
+  transform-origin: left;
+  transform: scaleX(1);
+  transition: transform linear;
+}
+
+/* ─── RESULTS ─── */
+.results-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.results-card::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(200,160,80,0.1);
+  border-radius: 3px;
+}
+
+.results-ornament {
+  font-size: 2rem;
+  color: var(--gold-dim);
+  letter-spacing: 0.5em;
+  margin-bottom: 1rem;
+}
+
+.results-score {
+  font-family: 'Cinzel', serif;
+  font-size: 4.5rem;
+  color: var(--gold);
+  line-height: 1;
+  text-shadow: 0 0 30px rgba(200,160,80,0.4);
+}
+
+.results-denom {
+  font-family: 'Cormorant SC', serif;
+  font-size: 1.1rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin: 0.3rem 0;
+}
+
+.results-label {
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: 1.1rem;
+  margin: 0.5rem 0 2rem;
+}
+
+.results-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  max-width: 280px;
+  margin: 0 auto 2.5rem;
+}
+.results-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--crimson), var(--gold));
+  border-radius: 2px;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+
+/* ─── QUIZ SIZE SELECTOR ─── */
+.quiz-setup {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.quiz-setup-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+.size-btns {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.size-btn {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  padding: 0.3rem 1rem;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.size-btn:hover { border-color: var(--border-gold); color: var(--gold-dim); }
+.size-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(200,160,80,0.08); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--border); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="header-ornament">✦</div>
+  <h1>Русская Литература</h1>
+  <p class="subtitle">72 карточки · Интервальные повторения · Квиз</p>
+  <div class="header-rule"><div class="header-rule-center"></div></div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('cards')">КАРТОЧКИ</button>
+  <button class="tab-btn" onclick="switchTab('quiz')">КВИЗ <span class="due-badge" id="quiz-badge">72</span></button>
+</div>
+
+<!-- ═══ CARDS VIEW ═══ -->
+<div class="view active" id="view-cards">
+  <div class="stats-bar">
+    <div class="stat"><strong id="stat-total">0</strong><span>всего</span></div>
+    <div class="stat"><strong id="stat-known">0</strong><span>знаю</span></div>
+    <div class="stat"><strong id="stat-due">0</strong><span>повторить</span></div>
+  </div>
+
+  <div class="filter-row" id="filter-row"></div>
+
+  <div class="progress-bar" style="margin-bottom:1.5rem">
+    <div class="progress-fill" id="card-progress" style="width:0%"></div>
+  </div>
+
+  <div class="card-container" onclick="flipCard()">
+    <div class="card-inner" id="card-inner">
+      <div class="card-face card-front">
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+        <span class="card-num" id="card-num">1 / 72</span>
+        <span class="card-cat" id="card-cat"></span>
+        <div class="card-label">Вопрос</div>
+        <div class="card-text" id="card-q">Загрузка…</div>
+        <span class="card-hint">нажмите, чтобы увидеть ответ</span>
+      </div>
+      <div class="card-face card-back">
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+        <span class="card-num" id="card-num-b">1 / 72</span>
+        <div class="card-label">Ответ</div>
+        <div class="card-text" id="card-a">—</div>
+        <span class="card-hint">оцените себя ниже</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:relative;height:56px;max-width:640px;margin:0 auto 1.5rem;">
+    <div class="card-controls" id="rate-btns" style="display:none;position:absolute;inset:0;margin:0;">
+      <button class="btn btn-red" onclick="rateCard(false)">✗ &nbsp;Не знал</button>
+      <button class="btn btn-green" onclick="rateCard(true)">✓ &nbsp;Знал</button>
+    </div>
+    <div class="card-controls" id="flip-btns" style="position:absolute;inset:0;margin:0;">
+      <button class="btn btn-outline" onclick="prevCard()">← Назад</button>
+      <button class="btn btn-gold" onclick="flipCard()">Перевернуть</button>
+      <button class="btn btn-outline" onclick="nextCard()">Вперёд →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ QUIZ VIEW ═══ -->
+<div class="view" id="view-quiz">
+
+  <div class="quiz-setup">
+    <div class="quiz-setup-label">Количество вопросов</div>
+    <div class="size-btns">
+      <button class="size-btn" onclick="setQuizSize(10)" id="sz-10">10</button>
+      <button class="size-btn active" onclick="setQuizSize(20)" id="sz-20">20</button>
+      <button class="size-btn" onclick="setQuizSize(40)" id="sz-40">40</button>
+      <button class="size-btn" onclick="setQuizSize(72)" id="sz-72">Все 72</button>
+    </div>
+  </div>
+
+  <div id="quiz-area" style="display:none">
+    <div class="quiz-header">
+      <span class="q-counter" id="q-counter">Вопрос 1 / 20</span>
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <span class="quiz-score" id="q-score">✦ 0</span>
+        <button class="btn btn-outline" onclick="resetQuiz()" style="padding:0.3rem 0.9rem;font-size:0.8rem;letter-spacing:0.05em;color:var(--text-muted);border-color:var(--border)">✕ Сброс</button>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="quiz-progress" style="width:0%"></div></div>
+    <div class="quiz-question" id="q-block">
+      <div class="q-num-badge" id="q-num-badge">01</div>
+      <div id="q-text"></div>
+    </div>
+    <div class="options" id="q-options"></div>
+    <div class="feedback-msg" id="q-feedback"></div>
+    <div class="auto-timer-bar" id="auto-timer-bar"><div class="auto-timer-fill" id="auto-timer-fill"></div></div>
+    <div class="quiz-nav">
+      <button class="btn btn-outline" id="prev-btn" onclick="prevQuestion()" style="padding:0.5rem 1.2rem;font-size:0.9rem;display:none">← Назад</button>
+      <span id="q-timer-label" style="font-size:0.85rem;color:var(--text-muted);font-style:italic;flex:1;text-align:center;"></span>
+      <button class="btn btn-outline" id="next-btn" onclick="skipToNext()" style="display:none;padding:0.5rem 1.2rem;font-size:0.9rem">Пропустить →</button>
+    </div>
+  </div>
+
+  <div id="quiz-start" style="text-align:center;padding:3rem 0">
+    <div style="color:var(--gold-dim);font-size:3rem;margin-bottom:1.5rem">✦</div>
+    <button class="btn btn-gold" onclick="startQuiz()" style="font-size:1.1rem;padding:0.8rem 2.5rem">Начать квиз</button>
+  </div>
+
+  <div id="quiz-results" style="display:none">
+    <div class="results-card">
+      <div class="results-ornament">✦ ✦ ✦</div>
+      <div class="results-score" id="res-score">0</div>
+      <div class="results-denom" id="res-denom">из 20</div>
+      <div class="results-label" id="res-label">Результат</div>
+      <div class="results-bar"><div class="results-fill" id="res-fill" style="width:0%"></div></div>
+      <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-outline" onclick="resetQuiz()" style="font-size:0.95rem">Сбросить и начать заново</button>
+        <button class="btn btn-gold" onclick="startQuiz()">Ещё раз →</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /view-quiz -->
+</div><!-- /container -->
+
+<script>
+const ALL_CARDS = [
+  {q:"Известный русский поэт 20 в. рассматривал свои произведения как целостный роман в стихах, разделив поэзию на 3 тома и назвав «трилогией вочеловечения». Кто этот поэт?", a:"Александр Блок", cat:"Блок"},
+  {q:"Нобелевской премией в области литературы награждены: Шолохов, Солженицын, Бродский, Бунин, Пастернак. Кому из русских писателей ПЕРВОМУ была присуждена эта премия?", a:"Ивану Бунину (1933 год)", cat:"Биография"},
+  {q:"На каком корабле отправился в путешествие герой рассказа Бунина «Господин из Сан-Франциско»?", a:"«Атлантида»", cat:"Бунин"},
+  {q:"Кто из известных русских поэтов был женат на дочери химика — создателя периодической системы химических элементов?", a:"Александр Блок (был женат на Любови Дмитриевне Менделеевой)", cat:"Блок"},
+  {q:"Путешественник и поэт, не боровшиеся, а дополнявшие друг друга. На страницах его поэтических сборников — экзотические животные Африки. О каком поэте речь?", a:"Николай Гумилёв", cat:"Поэты"},
+  {q:"Как называется первый сборник стихотворений Есенина, названный в честь дня поминовения умерших (первый вторник послепасхальной недели)?", a:"«Радуница»", cat:"Есенин"},
+  {q:"За месяц до смерти Есенин создаёт поэму с заметным влиянием пушкинской трагедии «Моцарт и Сальери». Что это за поэма?", a:"«Чёрный человек»", cat:"Есенин"},
+  {q:"Мемуаристы утверждают, что это была любимая пьеса Сталина — он смотрел её 17 раз. О какой пьесе Булгакова речь?", a:"«Дни Турбиных»", cat:"Булгаков"},
+  {q:"Как известно, буревестник — большая океаническая птица. Кого в русской литературе символизирует буревестник у Горького?", a:"Революционера, предвестника революционной бури", cat:"Горький"},
+  {q:"У какого русского поэта первоначальное название поэмы — «Тринадцатый апостол»?", a:"Владимир Маяковский (поэма «Облако в штанах»)", cat:"Маяковский"},
+  {q:"В романе Пастернака «Доктор Живаго» главный герой был не только врачом, но и поэтом. Какое стихотворение, по мысли автора, принадлежит главному герою?", a:"«Зимняя ночь» («Свеча горела на столе, свеча горела…»)", cat:"Пастернак"},
+  {q:"В романе Гончарова «Обломов» обломовцы «соглашались лучше терпеть всякого рода неудобства, чем…» — как продолжается фраза?", a:"«…переменить заведённый порядок вещей»", cat:"Гончаров"},
+  {q:"Четвёртое действие «Грозы» Островского происходит на галерее полуразрушенного здания с остатками фрески. Что на ней изображено?", a:"Геенна огненная (картина Страшного суда)", cat:"Пьесы"},
+  {q:"В пьесе Горького «На дне» Лука обещает многим несбыточное. Что он обещает Актёру?", a:"Бесплатную лечебницу для пьяниц, где его вылечат", cat:"Пьесы"},
+  {q:"В романе Фадеева «Разгром» какой поступок Левинсона осуждается Мечиком (помимо конфискации свиньи у корейской семьи)?", a:"Левинсон приказал дать смертельную дозу морфия тяжелораненому Фролову, чтобы не задерживать отряд", cat:"XX век"},
+  {q:"В новелле Астафьева «Царь-рыба» главный герой Игнатьич оказался в воде вместе с огромной рыбой — «на одной ловушке». Какова развязка?", a:"Игнатьич отпускает рыбу, та уходит в глубину; герой воспринимает это как нравственное очищение и прощение", cat:"XX век"},
+  {q:"Как продолжается пословица Платона Каратаева из «Войны и мира»: «России да лету —…»?", a:"«…угодья нету»", cat:"Толстой"},
+  {q:"В повести Васильева «А зори здесь тихие» Васков и девушки решили ввести немцев в заблуждение. Каким образом?", a:"Васков ходил у немцев на виду и делал вид, что рубит лес — создавая впечатление, будто здесь работает большая группа", cat:"XX век"},
+  {q:"В поэме Пушкина «Медный всадник» о чём повествуется?", a:"О наводнении в Петербурге и трагедии маленького человека Евгения, потерявшего невесту Парашу и сошедшего с ума", cat:"Пушкин"},
+  {q:"Какой случай расстроил планы Беликова («Человек в футляре») жениться на Вареньке?", a:"Он увидел, как Варенька катается на велосипеде — это показалось ему неприличным и опасным", cat:"Чехов"},
+  {q:"Достоевский, Толстой, Гоголь оскорбились бы, если бы кто-нибудь назвал их писателями. Кем же они считали себя?", a:"Они считали себя литераторами (а не «писателями» в тогдашнем узком смысле)", cat:"Биография"},
+  {q:"Что Пушкин называл «своим огородом»?", a:"Стихи на случай, мелкие лирические произведения (альбомные стихи)", cat:"Пушкин"},
+  {q:"В день рождения этого русского поэта с утра до вечера звонили колокола и народ кричал «ура». Назовите его имя.", a:"Гавриил Державин (день рождения 14 июля совпал с народными гуляниями)", cat:"Биография"},
+  {q:"Батюшков — Ахилл, Вяземский — Асмодей, Жуковский — Светлана, Пушкин — Сверчок. Что объединяет эти имена и прозвища?", a:"Это прозвища членов литературного общества «Арзамас»", cat:"Биография"},
+  {q:"В литературе второй половины XIX века в 20–30-е годы сформировался один из основных методов изображения жизни. Назовите этот метод.", a:"Критический реализм", cat:"Теория"},
+  {q:"Мастер из романа Булгакова сжёг свою рукопись. Что заслужил Мастер за своё творчество?", a:"Покой (но не свет): «Он не заслужил света, он заслужил покой»", cat:"Булгаков"},
+  {q:"Понтий Пилат в романе «Мастер и Маргарита» постоянно страдал от боли, из-за которой хотел даже умереть. Что это была за боль?", a:"Гемикрания — мигрень (невыносимая боль в половине головы)", cat:"Булгаков"},
+  {q:"Писатель Одоевский ставил «на четвёртый номер» после «Недоросля», «Ревизора» и «Горя от ума» произведение под названием «Банкрут». Назовите автора.", a:"Александр Островский («Банкрут» — первоначальное название пьесы «Свои люди — сочтёмся»)", cat:"Пьесы"},
+  {q:"Цикл рассказов Тургенева «Записки охотника» — о какой важнейшей проблеме того времени идёт речь в этих рассказах?", a:"О крепостном праве, о бесправии и человеческом достоинстве крестьян", cat:"Тургенев"},
+  {q:"Герой какого романа Тургенева был назван автором «любимым детищем»? Роман был посвящён памяти Белинского и вызвал бурю возмущений.", a:"«Рудин»", cat:"Тургенев"},
+  {q:"В 1853 году Чернышевский пишет диссертацию, на защите которой произносит суровые слова о рабском преклонении перед старыми мнениями. О какой диссертации речь?", a:"«Эстетические отношения искусства к действительности»", cat:"XIX век"},
+  {q:"Как называется глава о Рахметове в романе Чернышевского «Что делать?»?", a:"«Особенный человек»", cat:"XIX век"},
+  {q:"Какие черты характерны для поэзии Некрасова (в отличие от его предшественников)?", a:"Обращение к народной теме, разговорная речь, прозаизмы, гражданский пафос, изображение страданий простого народа", cat:"Некрасов"},
+  {q:"В каком стихотворении Некрасова отразилась широкая картина бессовестной эксплуатации народа при строительстве дороги графом Клейнмихелем?", a:"«Железная дорога»", cat:"Некрасов"},
+  {q:"«Я — Эзоп и воспитанник цензурного ведомства» — так писал о себе знаменитый писатель, употреблявший выражения «бараний рог», «ежовые рукавицы», «фюить!». О ком речь?", a:"Михаил Салтыков-Щедрин", cat:"Щедрин"},
+  {q:"В чём суть теории и индивидуалистического бунта Раскольникова в романе «Преступление и наказание»?", a:"Люди делятся на «тварей дрожащих» и «право имеющих»; сильная личность вправе преступить нравственный закон ради высокой цели", cat:"Достоевский"},
+  {q:"Рассуждение о настоящей жизни в «Войне и мире» Толстой подкрепляет рассказом о событиях в жизни одного героя. О ком речь?", a:"О Пьере Безухове (его духовные искания и внутреннее перерождение)", cat:"Толстой"},
+  {q:"«___ пыталась вырваться на волю из фальшивого мира, но не сумела. Вокруг неё выросла стена отчуждения: все набросились на неё». Назовите героиню.", a:"Анна Каренина", cat:"Толстой"},
+  {q:"Роман «Война и мир» пронизан единой мыслью — как её определил Толстой?", a:"«Мысль народная» — величие и сила простого народа, решающего исход истории", cat:"Толстой"},
+  {q:"Кто наградил юного Чехова псевдонимом «Антоша Чехонте»?", a:"Учитель Закона Божьего Фёдор Покровский", cat:"Чехов"},
+  {q:"Как вы понимаете название рассказа Чехова «Человек в футляре»?", a:"Беликов прячется от жизни в «футляр» — правила, запреты, страх; образ стал символом духовной замкнутости и косности", cat:"Чехов"},
+  {q:"Постановка какой пьесы Чехова положила начало «чеховскому театру» в России?", a:"«Чайка» (1898, МХТ, режиссёры Станиславский и Немирович-Данченко)", cat:"Чехов"},
+  {q:"В какой пьесе Маяковского герои перенесены в 2030 год и есть персонаж Велосипедкин?", a:"«Клоп»", cat:"Маяковский"},
+  {q:"Кто из футуристов пытался создать особый «заумный язык»?", a:"Велимир Хлебников", cat:"Поэты"},
+  {q:"Если внимательно перечитать «Песнь о вещем Олеге» Пушкина, слово «раб» там не встретишь, но оно присутствует в тексте. Как именно оно звучит?", a:"«Прощай, мой товарищ, мой верный слуга» — слуга (раб в старом смысле)", cat:"Пушкин"},
+  {q:"Каким природным явлением Александр Островский назвал своё произведение?", a:"«Гроза»", cat:"Пьесы"},
+  {q:"Какое произведение Лермонтова не является стихотворением?", a:"«Мцыри» и «Демон» — поэмы; «Герой нашего времени» — роман; «Маскарад» — драма", cat:"Лермонтов"},
+  {q:"«Поэма в прозе» — переплетение жанров. Назовите автора и название такого произведения в русской литературе.", a:"Иван Тургенев — «Стихотворения в прозе»", cat:"Тургенев"},
+  {q:"У Александра Блока некоторые слова становились символами. Символом чего был синий плащ?", a:"Символом измены, неверности возлюбленной", cat:"Блок"},
+  {q:"Автор критических статей «Что такое обломовщина?», «Тёмное царство», «Луч света в тёмном царстве»?", a:"Николай Добролюбов", cat:"Критика"},
+  {q:"Журнал «Современник» был закрыт в 1868 году. Какой новый журнал основал Некрасов, ставший популярным до 1884 года?", a:"«Отечественные записки»", cat:"Биография"},
+  {q:"От какого наказания Маргарита освободила Фриду на балу Сатаны в романе «Мастер и Маргарита»?", a:"Фриде каждое утро подавали платок, которым она задушила своего ребёнка. Маргарита велела больше не давать ей этот платок.", cat:"Булгаков"},
+  {q:"Когда Маяковский отдал эту поэму цензору, тот спросил: «Вы что, на каторгу захотели?». Какая поэма?", a:"«Облако в штанах»", cat:"Маяковский"},
+  {q:"Какая «болезнь» одолела Евгения Онегина в молодости?", a:"«Русская хандра» (сплин, скука, разочарованность)", cat:"Пушкин"},
+  {q:"Одна из особенностей лирики Марины Цветаевой — что это?", a:"Эмоциональная напряжённость, энергичный ритм, обилие тире, разговорная интонация, трагизм, исповедальность", cat:"Цветаева"},
+  {q:"О чём последний описанный в романе сон Раскольникова («Преступление и наказание»)?", a:"Сон о трихинах — болезнь, поражающая людей убеждённостью в собственной правоте; намёк на возможное духовное возрождение", cat:"Достоевский"},
+  {q:"Павел Петрович в романе «Отцы и дети» был сибарит. Каково значение этого слова?", a:"Человек, привыкший к роскоши и праздности, любящий негу и комфорт", cat:"Тургенев"},
+  {q:"«Шёл в комнату…» — каково продолжение этого афоризма из «Горя от ума» Грибоедова?", a:"«…попал в другую»", cat:"Грибоедов"},
+  {q:"На рубеже XIX–XX вв. существовало 3 литературных течения: символизм, акмеизм, футуризм. Кто из известных поэтов не примыкал ни к каким группировкам?", a:"Иван Бунин, Максимилиан Волошин, Марина Цветаева (не входили ни в одно течение)", cat:"Поэты"},
+  {q:"Кто из русских поэтов 20 в. был избран «королём поэзии» в 1918 г. на вечере в Политехническом музее?", a:"Игорь Северянин", cat:"Поэты"},
+  {q:"Тема «маленького человека» — традиционная в русской литературе XIX в. Кто из писателей XX века продолжил эту тему?", a:"Михаил Зощенко, Андрей Платонов", cat:"XX век"},
+  {q:"Эта книга рассказов, единственная в своём роде, посвящена только теме любви и впервые вышла в Нью-Йорке. Как называется и кто автор?", a:"«Тёмные аллеи» — Иван Бунин", cat:"Бунин"},
+  {q:"В русской литературе есть роман-эпопея «Война и мир» (XIX в.) и поэма с таким же названием (XX в.). Кто её автор?", a:"Владимир Маяковский", cat:"Маяковский"},
+  {q:"Цветаева написала стихотворение «Имя твоё — птица в руке, / Имя твоё — льдинка на языке… / Имя твоё — пять букв». Какому поэту оно посвящено?", a:"Александру Блоку", cat:"Цветаева"},
+  {q:"Эта поэма о коллективизации в традициях Некрасова, за которую автор получил орден Ленина и Сталинскую премию. Как называется?", a:"«Страна Муравия» — Александр Твардовский", cat:"XX век"},
+  {q:"Поэма-летопись Великой Отечественной войны, второе название — «Книга про бойца». Её герой — неунывающий балагур. Как называется?", a:"«Василий Тёркин» — Александр Твардовский", cat:"XX век"},
+  {q:"Что хотел показать читателю Салтыков-Щедрин сказкой «Премудрый пескарь»?", a:"Трусость и духовную пустоту обывателя, прожившего жизнь в страхе и самоизоляции", cat:"Щедрин"},
+  {q:"Выберите верную характеристику русской литературы. Что отличает её от других?", a:"Глубокая духовность, нравственный поиск, сострадание «маленькому человеку», общественная и философская проблематика", cat:"Теория"},
+  {q:"«Береги честь смолоду» — эпиграф к какому произведению Пушкина?", a:"«Капитанская дочка»", cat:"Пушкин"},
+  {q:"Кого принято считать «отцом» русского романтизма в литературе?", a:"Василий Жуковский", cat:"Биография"},
+  {q:"Какое стихотворение Лермонтова явилось ответом на убийство Пушкина?", a:"«Смерть поэта»", cat:"Лермонтов"},
+  {q:"Кем был основан и издавался журнал «Вестник Европы»?", a:"Основан Николаем Карамзиным в 1802 году", cat:"Биография"},
+];
+
+// ─── STATE ───
+let cards = ALL_CARDS.map((c,i) => ({...c, id:i, known:false, nextReview:Date.now(), interval:1, ef:2.5}));
+let filtered = [...cards], cardIdx = 0, flipped = false, activeCategory = 'all';
+let quizQ = [], quizIdx = 0, quizScore = 0, answered = false, quizSize = 20;
+let autoTimer = null;
+const AUTO_DELAY = 2800; // ms before auto-advance
+
+// ─── SM-2 ───
+function sm2(card, correct) {
+  if (correct) {
+    card.known = true;
+    card.interval = card.interval < 2 ? card.interval * 2 + 1 : Math.round(card.interval * card.ef);
+    card.ef = Math.max(1.3, card.ef + 0.1);
+  } else {
+    card.known = false;
+    card.interval = 1;
+    card.ef = Math.max(1.3, card.ef - 0.2);
+  }
+  card.nextReview = Date.now() + card.interval * 60000;
+}
+
+// ─── FILTERS ───
+function buildFilters() {
+  const cats = ['all', ...new Set(ALL_CARDS.map(c => c.cat))];
+  document.getElementById('filter-row').innerHTML = cats.map(c =>
+    `<button class="filter-tag${c === 'all' ? ' active' : ''}" onclick="setCategory('${c}')">${c === 'all' ? 'Все темы' : c}</button>`
+  ).join('');
+}
+
+function setCategory(cat) {
+  activeCategory = cat;
+  document.querySelectorAll('.filter-tag').forEach(b =>
+    b.classList.toggle('active', b.textContent === (cat === 'all' ? 'Все темы' : cat))
+  );
+  filtered = cat === 'all' ? [...cards] : cards.filter(c => c.cat === cat);
+  cardIdx = 0;
+  updateCardDisplay();
+}
+
+// ─── CARD DISPLAY ───
+function updateCardDisplay() {
+  flipped = false;
+  document.getElementById('card-inner').classList.remove('flipped');
+  document.getElementById('rate-btns').style.display = 'none';
+  document.getElementById('flip-btns').style.display = 'flex';
+
+  if (!filtered.length) return;
+  const c = filtered[cardIdx];
+  document.getElementById('card-q').textContent = c.q;
+  document.getElementById('card-a').textContent = c.a;
+  document.getElementById('card-cat').textContent = c.cat;
+  const label = `${cardIdx + 1} / ${filtered.length}`;
+  document.getElementById('card-num').textContent = label;
+  document.getElementById('card-num-b').textContent = label;
+  document.getElementById('card-progress').style.width = `${((cardIdx + 1) / filtered.length) * 100}%`;
+
+  const known = cards.filter(c => c.known).length;
+  const due = cards.filter(c => !c.known).length;
+  document.getElementById('stat-total').textContent = cards.length;
+  document.getElementById('stat-known').textContent = known;
+  document.getElementById('stat-due').textContent = due;
+}
+
+function flipCard() {
+  flipped = !flipped;
+  document.getElementById('card-inner').classList.toggle('flipped', flipped);
+  document.getElementById('rate-btns').style.display = flipped ? 'flex' : 'none';
+  document.getElementById('flip-btns').style.display = flipped ? 'none' : 'flex';
+}
+
+function rateCard(correct) {
+  sm2(filtered[cardIdx], correct);
+  cardIdx = (cardIdx + 1) % filtered.length;
+  updateCardDisplay();
+}
+
+function nextCard() { cardIdx = (cardIdx + 1) % filtered.length; updateCardDisplay(); }
+function prevCard() { cardIdx = (cardIdx - 1 + filtered.length) % filtered.length; updateCardDisplay(); }
+
+// ─── QUIZ SIZE ───
+function setQuizSize(n) {
+  quizSize = n;
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sz-' + n).classList.add('active');
+  document.getElementById('quiz-badge').textContent = n;
+  // If quiz is running, reset to start screen so user can restart with new size
+  if (document.getElementById('quiz-area').style.display !== 'none') {
+    resetQuiz();
+  }
+}
+
+// ─── QUIZ ───
+function shuffleArr(a) { return [...a].sort(() => Math.random() - 0.5); }
+
+function startQuiz() {
+  const pool = shuffleArr(ALL_CARDS).slice(0, quizSize);
+  quizQ = pool.map(q => {
+    const wrong = shuffleArr(ALL_CARDS.filter(c => c !== q)).slice(0, 3).map(c => c.a);
+    return { q: q.q, correct: q.a, options: shuffleArr([q.a, ...wrong]), chosen: null };
+  });
+  quizIdx = 0; quizScore = 0; answered = false;
+  document.getElementById('quiz-start').style.display = 'none';
+  document.getElementById('quiz-area').style.display = 'block';
+  document.getElementById('quiz-results').style.display = 'none';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  clearAutoTimer();
+  const q = quizQ[quizIdx];
+  document.getElementById('q-counter').textContent = `Вопрос ${quizIdx + 1} / ${quizQ.length}`;
+  document.getElementById('q-score').textContent = `✦ ${quizScore}`;
+  document.getElementById('quiz-progress').style.width = `${(quizIdx / quizQ.length) * 100}%`;
+  document.getElementById('q-num-badge').textContent = String(quizIdx + 1).padStart(2, '0');
+  document.getElementById('q-text').textContent = q.q;
+  const letters = ['А', 'Б', 'В', 'Г'];
+  const opts = q.options;
+  document.getElementById('q-options').innerHTML = opts.map((o, i) =>
+    `<button class="option-btn" onclick="selectOption(this,${i})"><span class="opt-letter">${letters[i]}</span><span>${o}</span></button>`
+  ).join('');
+  // show/hide prev button
+  document.getElementById('prev-btn').style.display = quizIdx > 0 ? 'inline-block' : 'none';
+
+  if (q.chosen !== null) {
+    // Restore already-answered state
+    answered = true;
+    const btns = document.querySelectorAll('.option-btn');
+    btns.forEach(b => {
+      b.disabled = true;
+      if (b.querySelector('span:last-child').textContent === q.correct) b.classList.add('correct');
+    });
+    if (q.chosen !== q.correct) btns[q.chosenIdx].classList.add('wrong');
+    const fb = document.getElementById('q-feedback');
+    if (q.chosen === q.correct) {
+      fb.textContent = '✓ Правильно!'; fb.className = 'feedback-msg show ok';
+    } else {
+      fb.textContent = '✗ Неверно. Правильный ответ: ' + q.correct; fb.className = 'feedback-msg show fail';
+    }
+    document.getElementById('next-btn').style.display = quizIdx < quizQ.length - 1 ? 'inline-block' : 'none';
+  } else {
+    answered = false;
+    document.getElementById('q-feedback').className = 'feedback-msg';
+    document.getElementById('next-btn').style.display = 'none';
+  }
+}
+
+function selectOption(btn, idx) {
+  if (answered) return;
+  answered = true;
+  const q = quizQ[quizIdx];
+  const chosen = q.options[idx];
+  q.chosen = chosen;
+  q.chosenIdx = idx;
+  document.querySelectorAll('.option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.querySelector('span:last-child').textContent === q.correct) b.classList.add('correct');
+  });
+  const fb = document.getElementById('q-feedback');
+  if (chosen === q.correct) {
+    quizScore++;
+    btn.classList.add('correct');
+    fb.textContent = '✓ Правильно!';
+    fb.className = 'feedback-msg show ok';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '✗ Неверно. Правильный ответ: ' + q.correct;
+    fb.className = 'feedback-msg show fail';
+  }
+  document.getElementById('q-score').textContent = `✦ ${quizScore}`;
+  document.getElementById('next-btn').style.display = 'inline-block';
+  startAutoTimer();
+}
+
+function startAutoTimer() {
+  clearAutoTimer();
+  const bar = document.getElementById('auto-timer-bar');
+  const fill = document.getElementById('auto-timer-fill');
+  const label = document.getElementById('q-timer-label');
+  bar.classList.add('visible');
+  fill.style.transition = 'none';
+  fill.style.transform = 'scaleX(1)';
+  // Force reflow
+  fill.getBoundingClientRect();
+  fill.style.transition = `transform ${AUTO_DELAY}ms linear`;
+  fill.style.transform = 'scaleX(0)';
+  let remaining = Math.ceil(AUTO_DELAY / 1000);
+  label.textContent = `Следующий через ${remaining} с...`;
+  const ticker = setInterval(() => {
+    remaining--;
+    if (remaining > 0) label.textContent = `Следующий через ${remaining} с...`;
+  }, 1000);
+  autoTimer = setTimeout(() => {
+    clearInterval(ticker);
+    nextQuestion();
+  }, AUTO_DELAY);
+  // store ticker ref to clear later
+  autoTimer._ticker = ticker;
+}
+
+function clearAutoTimer() {
+  if (autoTimer) {
+    clearTimeout(autoTimer);
+    if (autoTimer._ticker) clearInterval(autoTimer._ticker);
+    autoTimer = null;
+  }
+  const bar = document.getElementById('auto-timer-bar');
+  const label = document.getElementById('q-timer-label');
+  if (bar) bar.classList.remove('visible');
+  if (label) label.textContent = '';
+}
+
+function skipToNext() {
+  clearAutoTimer();
+  nextQuestion();
+}
+
+function nextQuestion() {
+  clearAutoTimer();
+  quizIdx++;
+  if (quizIdx >= quizQ.length) showResults();
+  else renderQuestion();
+}
+
+function prevQuestion() {
+  if (quizIdx <= 0) return;
+  clearAutoTimer();
+  // If current question was answered correctly, subtract from score
+  const cur = quizQ[quizIdx];
+  if (cur && cur.chosen === cur.correct) quizScore--;
+  // Go back — reset current question's answer so it can be re-answered
+  if (cur) { cur.chosen = null; cur.chosenIdx = null; }
+  quizIdx--;
+  renderQuestion();
+}
+
+function resetQuiz() {
+  clearAutoTimer();
+  quizQ = []; quizIdx = 0; quizScore = 0; answered = false;
+  document.getElementById('quiz-area').style.display = 'none';
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('quiz-start').style.display = 'block';
+}
+
+function showResults() {
+  document.getElementById('quiz-area').style.display = 'none';
+  document.getElementById('quiz-results').style.display = 'block';
+  const pct = Math.round((quizScore / quizQ.length) * 100);
+  document.getElementById('res-score').textContent = quizScore;
+  document.getElementById('res-denom').textContent = `из ${quizQ.length}`;
+  const labels = ['Попробуйте ещё раз 📖', 'Неплохое начало!', 'Хороший результат ✨', 'Отличная работа! 🌟', 'Превосходно! Настоящий знаток! 🏆'];
+  document.getElementById('res-label').textContent = labels[Math.min(Math.floor(pct / 21), 4)];
+  setTimeout(() => { document.getElementById('res-fill').style.width = pct + '%'; }, 100);
+}
+
+// ─── TABS ───
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', ['cards','quiz'][i] === tab));
+  document.getElementById('view-cards').classList.toggle('active', tab === 'cards');
+  document.getElementById('view-quiz').classList.toggle('active', tab === 'quiz');
+}
+
+// ─── INIT ───
+buildFilters();
+updateCardDisplay();
+</script>
+</body>
+</html>
